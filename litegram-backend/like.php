@@ -6,8 +6,35 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 
 include('connection.php');
 
-$user_id = $_POST['user_id'];
+require __DIR__ . '/vendor/autoload.php';
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 $img_id = $_POST['img_id'];
+
+if (empty($img_id)) {
+    $response = [];
+    $response['success'] = false;
+    $response['message'] = "Image id not provided";
+
+    die(json_encode($response));
+}
+
+//Validate JWT
+$headers = apache_request_headers();
+$auth = $headers['Authorization'];
+$token = str_replace("Bearer ", "", $auth);
+
+try {
+    $decoded = JWT::decode($token, new Key($key, 'HS256'));
+    $user_id = $decoded->id;
+} catch (Exception $e) {
+    $response = [];
+    $response['success'] = false;
+    $response['message'] = "Invalid token";
+
+    die(json_encode($response));
+}
 
 // check if already liked
 $check = $mysqli->prepare("SELECT * FROM likes WHERE user_id = ? AND img_id = ?");
@@ -29,6 +56,3 @@ $response = [];
 $response['success'] = true;
 
 echo json_encode($response);
-
-
-
