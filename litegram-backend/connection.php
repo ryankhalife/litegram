@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+$key = "my_secret_key";
 
 $host = "localhost";
 $db_user = "root";
