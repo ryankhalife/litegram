@@ -12,6 +12,15 @@ $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
 
+//check all fields are filled
+if (empty($f_name) || empty($l_name) || empty($username) || empty($password) || empty($email)) {
+    $response = [];
+    $response['success'] = false;
+    $response['message'] = "Please fill all fields";
+
+    die(json_encode($response));
+}
+
 //check password length
 if (strlen($password) < 8) {
     $response = [];
