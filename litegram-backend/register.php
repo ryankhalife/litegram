@@ -2,9 +2,12 @@
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
-header("Access-Control-Allow-Headers: X-Requested-With");
+header("Access-Control-Allow-Headers: *");
 
 include('connection.php');
+
+require __DIR__ . '/vendor/autoload.php';
+use Firebase\JWT\JWT;
 
 $f_name = $_POST['f_name'];
 $l_name = $_POST['l_name'];
@@ -31,7 +34,7 @@ if (strlen($password) < 8) {
 }
 
 //check username length
-if (strlen($username) < 4) {
+if (strlen($username) < 3) {
     $response = [];
     $response['success'] = false;
     $response['message'] = "Username must be at least 3 characters";
@@ -89,7 +92,15 @@ $response = [];
 $response['success'] = true;
 $response['message'] = "User registered successfully";
 
+$payload = [
+    "id" => $user['id'],
+    "username" => $user['username'],
+    "email" => $user['email'],
+    "f_name" => $user['f_name'],
+    "l_name" => $user['l_name'],
+];
+
+$jwt = JWT::encode($payload, $key, "HS256");
+$response['token'] = $jwt;
+
 echo json_encode($response);
-
-
-

@@ -2,7 +2,7 @@
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
-header("Access-Control-Allow-Headers: X-Requested-With");
+header("Access-Control-Allow-Headers: *");
 
 include('connection.php');
 
@@ -11,6 +11,15 @@ use Firebase\JWT\JWT;
 
 $username = $_POST['username'];
 $password = $_POST['password'];
+
+//check all fields are filled
+if (empty($username) || empty($password)) {
+    $response = [];
+    $response['success'] = false;
+    $response['message'] = "Please fill all fields";
+
+    die(json_encode($response));
+}
 
 // get user from database
 $query = $mysqli->prepare("SELECT * FROM users WHERE username = ?");
