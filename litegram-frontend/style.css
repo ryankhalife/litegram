@@ -23,6 +23,7 @@ a:active {
 
 body {
   background-color: #343232;
+  margin: 0;
 }
 
 .app-title {
@@ -35,7 +36,31 @@ body {
   color: red;
 }
 
-.container {
+.main-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.main-container > * {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.content-container {
+  background-color: slategray;
+  flex-grow: 1;
+  height: 300vh;
+}
+
+.main-container nav {
+  background-color: #70247c;
+  width: 320px;
+  height: 100vh;
+  position: fixed;
+}
+
+.form-container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -89,6 +114,41 @@ input {
 .hidden {
   display: none;
 }
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
+  padding: 5% 0;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nav-link:hover {
+  cursor: pointer;
+  background-color: rgba(100, 100, 100, 0.4);
+  border-radius: 24px;
+}
+
+.link-text {
+  margin-left: 1rem;
+  font-size: 1.2rem;
+}
+
+.link-icon {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+}
+
+/* .flex-end {
+  margin-top: auto;
+} */
 
 @media only screen and (max-width: 600px) {
   .container {

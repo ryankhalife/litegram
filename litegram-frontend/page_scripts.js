@@ -21,7 +21,7 @@ pages.is_logged_out = () => {
 };
 
 pages.unhide = () => {
-  const container = document.getElementById("container");
+  const container = document.getElementById("main-container");
   container.classList.remove("hidden");
 };
 
