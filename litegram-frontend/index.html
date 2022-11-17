@@ -3,20 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" , maximum-scale="1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="stylesheet" href="style.css" />
     <title>Litegram</title>
   </head>
   <body>
-    <div class="container center">
-      <div class="form">
-        <h1 class="app-title">Litegram</h1>
-        <input type="text" name="username" id="username" placeholder="Username" />
-        <input type="password" name="password" id="password" placeholder="Password" />
-        <button id="login">Login</button>
-        <p>Don't have an account? <a href="signup.html">Sign up</a></p>
-      </div>
+    <div id="container" class="hidden">
+      <h1>Home</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium laboriosam maxime, quo
+        aliquid tempore deserunt facilis atque, voluptatibus explicabo suscipit eaque illo maiores,
+        iusto exercitationem adipisci voluptatem ipsa modi facere?
+      </p>
     </div>
   </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="page_scripts.js"></script>
+  <script>
+    pages.load("home");
+  </script>
 </html>

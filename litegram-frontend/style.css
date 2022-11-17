@@ -31,6 +31,10 @@ body {
   color: black;
 }
 
+.error-text {
+  color: red;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -78,9 +82,16 @@ input {
   opacity: 0.8;
 }
 
+.form p {
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
 @media only screen and (max-width: 600px) {
   .container {
-    max-width: 100%;
     margin-top: 0;
   }
 }
