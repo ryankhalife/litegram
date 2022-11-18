@@ -2,7 +2,7 @@
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST');
-header("Access-Control-Allow-Headers: X-Requested-With");
+header("Access-Control-Allow-Headers: *");
 
 include('connection.php');
 
@@ -38,7 +38,7 @@ $response['success'] = true;
 $response['posts'] = [];
 
 while ($post = $result->fetch_assoc()) {
-    $response['posts'] = $post;
+    $response['posts'][] = $post;
 }
 
 echo json_encode($response);

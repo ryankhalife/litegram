@@ -8,15 +8,15 @@ include('connection.php');
 
 $id = $_GET['id'];
 
-$query = $mysqli->prepare("SELECT username, bio, profile_picture  FROM users WHERE id = ?");
+$query = $mysqli->prepare("SELECT COUNT(*) FROM likes WHERE image_id = ?");
 $query->bind_param("i", $id);
 $query->execute();
 
 $result = $query->get_result();
-$user = $result->fetch_assoc();
+$likes = $result->fetch_assoc();
 
 $response = [];
 $response['success'] = true;
-$response['user'] = $user;
+$response['likes'] = $likes;
 
 echo json_encode($response);
