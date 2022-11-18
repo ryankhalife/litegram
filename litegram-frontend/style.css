@@ -6,10 +6,6 @@
   box-sizing: border-box;
 }
 
-img {
-  max-width: 100%;
-}
-
 a {
   text-decoration: none;
   color: #70247c;
@@ -50,14 +46,14 @@ body {
 .content-container {
   background-color: slategray;
   flex-grow: 1;
-  height: 300vh;
 }
 
 .main-container nav {
   background-color: #70247c;
   width: 320px;
   height: 100vh;
-  position: fixed;
+  top: 0;
+  position: sticky;
 }
 
 .form-container {
@@ -146,9 +142,95 @@ input {
   margin: 10px;
 }
 
-/* .flex-end {
-  margin-top: auto;
-} */
+.image-feed {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image-post {
+  margin: 1rem;
+  width: 100%;
+  max-width: 700px;
+
+  background-color: #fff;
+  border: 1px solid gray;
+  border-radius: 10px;
+}
+
+.post-header,
+.post-info {
+  padding: 5px;
+}
+.post-user {
+  display: flex;
+  align-items: center;
+}
+
+.post-user-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.post-user-name {
+  margin-left: 10px;
+  font-size: 1.1rem;
+}
+
+.post-image {
+  font-size: 0;
+  line-height: 0;
+}
+
+.post-image img {
+  width: 100%;
+}
+
+.post-add-comment {
+  display: flex;
+  border-top: 1px solid gray;
+}
+
+.post-add-comment input {
+  width: 100%;
+  border: none;
+  padding: 0 10px;
+}
+
+.post-add-comment input:focus {
+  outline: none;
+}
+
+.post-add-comment button {
+  background-color: transparent;
+  border: none;
+  padding: 0 20px 0 5px;
+  font-size: 1rem;
+  color: #70247c;
+}
+
+.post-add-comment button:hover {
+  cursor: pointer;
+}
+
+.post-add-comment button:disabled {
+  color: #70247c;
+  opacity: 0.4;
+  cursor: default;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.post-caption > * {
+  display: inline;
+}
+
+.post-caption-user {
+  margin-right: 5px;
+}
 
 @media only screen and (max-width: 600px) {
   .container {

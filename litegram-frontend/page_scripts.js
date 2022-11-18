@@ -104,4 +104,15 @@ pages.load_signup = async () => {
 pages.load_home = async () => {
   if (pages.is_logged_out()) return;
   pages.unhide();
+
+  const postAddComment = document.querySelectorAll(".post-add-comment");
+  postAddComment.forEach((post) => {
+    post.querySelector("input").addEventListener("input", (e) => {
+      if (e.target.value == "") {
+        post.querySelector("button").disabled = true;
+      } else {
+        post.querySelector("button").disabled = false;
+      }
+    });
+  });
 };
