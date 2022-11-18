@@ -44,7 +44,6 @@ body {
 }
 
 .content-container {
-  background-color: slategray;
   flex-grow: 1;
 }
 
@@ -153,8 +152,8 @@ input {
   width: 100%;
   max-width: 700px;
 
-  background-color: #fff;
-  border: 1px solid gray;
+  background-color: #eeeeee;
+  border: 1px solid #6f6e6e;
   border-radius: 10px;
 }
 
@@ -193,6 +192,7 @@ input {
 }
 
 .post-add-comment input {
+  background-color: #eeeeee;
   width: 100%;
   border: none;
   padding: 0 10px;
