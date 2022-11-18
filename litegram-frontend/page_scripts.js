@@ -126,11 +126,13 @@ pages.load_home = async () => {
 
   const feed_container = document.getElementById("feed-container");
   feed.data.posts.forEach(async (post) => {
-    const res = await pages.get(base_url + "user.php?id=" + post.user_id);
+    let res = await pages.get(base_url + "user.php?id=" + post.user_id);
     const user = res.data.user;
     const user_profile_picture = user.profile_picture;
     const user_username = user.username;
-    const post_likes = 124;
+    res = await pages.get(base_url + "get_likes.php?id=" + post.id);
+    const likes = res.data.likes;
+    const like_text = likes == 1 ? "like" : "likes";
 
     const div = document.createElement("div");
     div.classList.add("image-post");
@@ -145,7 +147,7 @@ pages.load_home = async () => {
         <img src="${base_url}/uploads/posts/${post.image}" alt="Post image" />
       </div>
       <div class="post-info">
-        <div class="post-likes bold">${post_likes} likes</div>
+        <div class="post-likes bold">${likes} ${like_text}</div>
         <div class="post-caption">
           <div class="post-caption-user bold">${user_username}</div>
           <div class="post-caption-text">${post.caption}</div>
