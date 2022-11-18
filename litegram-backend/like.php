@@ -10,7 +10,7 @@ require __DIR__ . '/vendor/autoload.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
-$img_id = $_POST['img_id'];
+$img_id = $_GET['id'];
 
 if (empty($img_id)) {
     $response = [];
