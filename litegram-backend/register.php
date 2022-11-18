@@ -83,9 +83,11 @@ if ($result->num_rows > 0) { // email already exists
 //hash password
 $password = password_hash($password, PASSWORD_DEFAULT);
 
+$profile_picture = "default.jpeg";
+
 // insert user
-$insert = $mysqli->prepare("INSERT INTO users (f_name, l_name, username, password, email) VALUES (?, ?, ?, ?, ?)");
-$insert->bind_param("sssss", $f_name, $l_name, $username, $password, $email);
+$insert = $mysqli->prepare("INSERT INTO users (f_name, l_name, username, password, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?)");
+$insert->bind_param("sssss", $f_name, $l_name, $username, $password, $email, $profile_picture);
 $insert->execute();
 
 $response = [];
