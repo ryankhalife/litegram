@@ -86,20 +86,22 @@ $password = password_hash($password, PASSWORD_DEFAULT);
 $profile_picture = "default.jpeg";
 
 // insert user
-$insert = $mysqli->prepare("INSERT INTO users (f_name, l_name, username, password, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?)");
-$insert->bind_param("ssssss", $f_name, $l_name, $username, $password, $email, $profile_picture);
-$insert->execute();
+$query = $mysqli->prepare("INSERT INTO users (f_name, l_name, username, password, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?)");
+$query->bind_param("ssssss", $f_name, $l_name, $username, $password, $email, $profile_picture);
+$query->execute();
 
 $response = [];
 $response['success'] = true;
 $response['message'] = "User registered successfully";
 
+$id = $mysqli->insert_id;
+
 $payload = [
-    "id" => $user['id'],
-    "username" => $user['username'],
-    "email" => $user['email'],
-    "f_name" => $user['f_name'],
-    "l_name" => $user['l_name'],
+    "id" => $id,
+    "username" => $username,
+    "email" => $email,
+    "f_name" => $f_name,
+    "l_name" => $l_name,
 ];
 
 $jwt = JWT::encode($payload, $key, "HS256");
