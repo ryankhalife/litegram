@@ -8,7 +8,7 @@ include('connection.php');
 
 $id = $_GET['id'];
 
-$query = $mysqli->prepare("SELECT COUNT(*) FROM likes WHERE image_id = ?");
+$query = $mysqli->prepare("SELECT COUNT(*) FROM likes WHERE img_id = ?");
 $query->bind_param("i", $id);
 $query->execute();
 
@@ -17,6 +17,6 @@ $likes = $result->fetch_assoc();
 
 $response = [];
 $response['success'] = true;
-$response['likes'] = $likes;
+$response['likes'] = $likes['COUNT(*)'] ?? 0;
 
 echo json_encode($response);
