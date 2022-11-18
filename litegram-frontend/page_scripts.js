@@ -115,4 +115,12 @@ pages.load_home = async () => {
       }
     });
   });
+
+  const logoutHandler = () => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  };
+
+  const logout = document.getElementById("logout");
+  logout.addEventListener("click", logoutHandler);
 };
