@@ -87,7 +87,7 @@ $profile_picture = "default.jpeg";
 
 // insert user
 $insert = $mysqli->prepare("INSERT INTO users (f_name, l_name, username, password, email, profile_picture) VALUES (?, ?, ?, ?, ?, ?)");
-$insert->bind_param("sssss", $f_name, $l_name, $username, $password, $email, $profile_picture);
+$insert->bind_param("ssssss", $f_name, $l_name, $username, $password, $email, $profile_picture);
 $insert->execute();
 
 $response = [];
