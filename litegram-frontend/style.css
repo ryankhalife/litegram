@@ -22,6 +22,10 @@ body {
   margin: 0;
 }
 
+img {
+  width: 100%;
+}
+
 .app-title {
   font-family: "Satisfy", cursive;
   font-size: 3rem;
@@ -182,10 +186,6 @@ input {
   line-height: 0;
 }
 
-.post-image img {
-  width: 100%;
-}
-
 .post-add-comment {
   display: flex;
   border-top: 1px solid gray;
@@ -230,6 +230,17 @@ input {
 
 .post-caption-user {
   margin-right: 5px;
+}
+
+.like-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user-like {
+  width: 25px;
+  height: 25px;
 }
 
 @media only screen and (max-width: 600px) {

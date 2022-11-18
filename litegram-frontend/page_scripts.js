@@ -119,6 +119,16 @@ pages.load_home = async () => {
   if (pages.is_logged_out()) return;
   pages.unhide();
 
+  pages.home = {};
+
+  pages.home.updateLikes = (post_id, delta) => {
+    const post = document.getElementById("post-" + post_id);
+    const likes = post.querySelector(".post-likes");
+    const likes_nb = parseInt(likes.innerText) + delta;
+    const likes_text = likes_nb == 1 ? "like" : "likes";
+    likes.innerText = likes_nb + " " + likes_text;
+  };
+
   const token = localStorage.getItem("token");
   const feed = await pages.get(base_url + "get_feed.php", token);
 
@@ -126,6 +136,9 @@ pages.load_home = async () => {
 
   const feed_container = document.getElementById("feed-container");
   feed.data.posts.forEach(async (post) => {
+    const div = document.createElement("div");
+    feed_container.appendChild(div);
+
     let res = await pages.get(base_url + "user.php?id=" + post.user_id);
     const user = res.data.user;
     const user_profile_picture = user.profile_picture;
@@ -133,9 +146,12 @@ pages.load_home = async () => {
     res = await pages.get(base_url + "get_likes.php?id=" + post.id);
     const likes = res.data.likes;
     const like_text = likes == 1 ? "like" : "likes";
+    res = await pages.get(base_url + "liked.php?id=" + post.id, token);
+    const liked = res.data.liked;
+    const like_icon = liked ? "assets/liked.svg" : "assets/like.svg";
 
-    const div = document.createElement("div");
     div.classList.add("image-post");
+    div.id = "post-" + post.id;
     div.innerHTML = `
       <div class="post-header">
         <div class="post-user">
@@ -147,7 +163,12 @@ pages.load_home = async () => {
         <img src="${base_url}/uploads/posts/${post.image}" alt="Post image" />
       </div>
       <div class="post-info">
-        <div class="post-likes bold">${likes} ${like_text}</div>
+       <div class="like-info">
+       <div class="post-likes bold">${likes} ${like_text}</div>
+       <div class = "user-like">
+        <img src='${like_icon}'>
+      </div>
+        </div>
         <div class="post-caption">
           <div class="post-caption-user bold">${user_username}</div>
           <div class="post-caption-text">${post.caption}</div>
@@ -169,7 +190,21 @@ pages.load_home = async () => {
       }
     });
 
-    feed_container.appendChild(div);
+    div.querySelector(".user-like").addEventListener("click", async (e) => {
+      if (e.target.src.includes("like.svg")) {
+        e.target.src = "assets/liked.svg";
+      } else {
+        e.target.src = "assets/like.svg";
+      }
+      const like = await pages.get(base_url + "like.php?id=" + post.id, token);
+      if (!like) return;
+      if (like.data.message == "Liked") {
+        pages.home.updateLikes(post.id, 1);
+      }
+      if (like.data.message == "Unliked") {
+        pages.home.updateLikes(post.id, -1);
+      }
+    });
   });
 
   const posts = document.querySelectorAll(".image-post");
