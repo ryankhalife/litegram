@@ -39,6 +39,20 @@ pages.post = async (url, data, token = null) => {
   }
 };
 
+pages.get = async (url, token = null) => {
+  try {
+    return await axios.get(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+  } catch (error) {
+    return null;
+  }
+};
+
 pages.load_login = async () => {
   if (pages.is_logged_in()) return;
   pages.unhide();
@@ -105,16 +119,59 @@ pages.load_home = async () => {
   if (pages.is_logged_out()) return;
   pages.unhide();
 
-  const postAddComment = document.querySelectorAll(".post-add-comment");
-  postAddComment.forEach((post) => {
-    post.querySelector("input").addEventListener("input", (e) => {
+  const token = localStorage.getItem("token");
+  const feed = await pages.get(base_url + "get_feed.php", token);
+
+  if (!feed.data.success) return;
+
+  const feed_container = document.getElementById("feed-container");
+  feed.data.posts.forEach(async (post) => {
+    const res = await pages.get(base_url + "user.php?id=" + post.user_id);
+    const user = res.data.user;
+    const user_profile_picture = user.profile_picture;
+    const user_username = user.username;
+    const post_likes = 124;
+
+    const div = document.createElement("div");
+    div.classList.add("image-post");
+    div.innerHTML = `
+      <div class="post-header">
+        <div class="post-user">
+          <img class="post-user-img" src="${base_url}/uploads/profile-pictures/${user_profile_picture}" alt="Profile Picture" />
+          <div class="post-user-name bold">${user_username}</div>
+        </div>
+      </div>
+      <div class="post-image">
+        <img src="${base_url}/uploads/posts/${post.image}" alt="Post image" />
+      </div>
+      <div class="post-info">
+        <div class="post-likes bold">${post_likes} likes</div>
+        <div class="post-caption">
+          <div class="post-caption-user bold">${user_username}</div>
+          <div class="post-caption-text">${post.caption}</div>
+        </div>
+        <div class="post-comments"></div>
+      </div>
+      <div class="post-add-comment">
+        <input type="text" name="comment" id="comment" placeholder="Add a comment..." />
+        <button disabled class="post-add-comment-btn">Post</button>
+      </div>
+`;
+
+    div.querySelector(".post-add-comment input").addEventListener("input", (e) => {
+      const btn = div.querySelector(".post-add-comment button");
       if (e.target.value == "") {
-        post.querySelector("button").disabled = true;
+        btn.disabled = true;
       } else {
-        post.querySelector("button").disabled = false;
+        btn.disabled = false;
       }
     });
+
+    feed_container.appendChild(div);
   });
+
+  const posts = document.querySelectorAll(".image-post");
+  console.log(posts);
 
   const logoutHandler = () => {
     localStorage.removeItem("token");
