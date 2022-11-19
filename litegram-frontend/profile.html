@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Litegram</title>
+  </head>
+  <body>
+    <div class="hidden main-container" id="main-container">
+      <nav>
+        <header>
+          <h1 class="app-title">Litegram</h1>
+        </header>
+        <div class="nav-links">
+          <div class="top-links">
+            <div class="nav-link">
+              <div>
+                <img class="link-icon" src="assets/home.svg" alt="Home" />
+              </div>
+              <div class="link-text">Home</div>
+            </div>
+            <div class="nav-link">
+              <div>
+                <img class="link-icon" src="assets/profile.svg" alt="Profile" />
+              </div>
+              <div class="link-text">Profile</div>
+            </div>
+          </div>
+          <div class="bot-links">
+            <div class="nav-link flex-end" id="logout">
+              <div>
+                <img class="link-icon" src="assets/logout.svg" alt="Logout" />
+              </div>
+              <div class="link-text">Logout</div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="content-container">
+        <div class="profile-container">
+          <div class="profile-picture-container">
+            <img class="profile-picture" src="assets/test.jpg" alt="Profile Picture" />
+            <p id="username-display"></p>
+          </div>
+          <div class="profile-info-container">
+            <div class="profile-info">
+              <div class="profile-info-icon">
+                <img src="assets/profile.svg" alt="First Name Icon" />
+              </div>
+              <div class="profile-info-text">
+                <input type="text" id="fname" disabled placeholder="First Name" />
+              </div>
+            </div>
+            <div class="profile-info">
+              <div class="profile-info-icon">
+                <img src="assets/profile.svg" alt="Last Name Icon" />
+              </div>
+              <div class="profile-info-text">
+                <input type="text" id="lname" disabled placeholder="Last Name" />
+              </div>
+            </div>
+            <div class="profile-info">
+              <div class="profile-info-icon">
+                <img src="assets/profile.svg" alt="Username Icon" />
+              </div>
+              <div class="profile-info-text">
+                <input type="text" id="username" disabled placeholder="Username" />
+              </div>
+            </div>
+            <div class="profile-info">
+              <div class="profile-info-icon">
+                <img src="assets/profile.svg" alt="Email Icon" />
+              </div>
+              <div class="profile-info-text">
+                <input type="email" id="email" disabled placeholder="Email" />
+              </div>
+            </div>
+            <div class="profile-info">
+              <div class="profile-info-icon">
+                <img src="assets/profile.svg" alt="Bio Icon" />
+              </div>
+              <div class="profile-info-text">
+                <input type="text" id="bio" disabled placeholder="Bio" />
+              </div>
+            </div>
+            <div class="profile-info">
+              <div class="profile-info-icon">
+                <img src="assets/profile.svg" alt="Password Icon" />
+              </div>
+              <div class="profile-info-text">
+                <input type="password" id="password" disabled placeholder="********" />
+              </div>
+            </div>
+          </div>
+          <div class="profile-edit-container">
+            <div class="profile-edit-btn" id="edit-save-btn">Edit Profile</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="js/page_scripts.js"></script>
+  <script>
+    pages.load("profile");
+  </script>
+</html>

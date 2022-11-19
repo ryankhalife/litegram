@@ -53,6 +53,11 @@ pages.get = async (url, token = null) => {
   }
 };
 
+pages.logoutHandler = () => {
+  localStorage.removeItem("token");
+  window.location.href = "login.html";
+};
+
 pages.load_login = async () => {
   if (pages.is_logged_in()) return;
   pages.unhide();
@@ -119,9 +124,7 @@ pages.load_home = async () => {
   if (pages.is_logged_out()) return;
   pages.unhide();
 
-  pages.home = {};
-
-  pages.home.updateLikes = (post_id, delta) => {
+  const updateLikes = (post_id, delta) => {
     const post = document.getElementById("post-" + post_id);
     const likes = post.querySelector(".post-likes");
     const likes_nb = parseInt(likes.innerText) + delta;
@@ -131,8 +134,6 @@ pages.load_home = async () => {
 
   const token = localStorage.getItem("token");
   const feed = await pages.get(base_url + "get_feed.php", token);
-
-  document.querySelector("#feed-container").innerHTML = feed.data;
 
   if (!feed.data.success) return;
 
@@ -201,10 +202,10 @@ pages.load_home = async () => {
       const like = await pages.get(base_url + "like.php?id=" + post.id, token);
       if (!like) return;
       if (like.data.message == "Liked") {
-        pages.home.updateLikes(post.id, 1);
+        updateLikes(post.id, 1);
       }
       if (like.data.message == "Unliked") {
-        pages.home.updateLikes(post.id, -1);
+        updateLikes(post.id, -1);
       }
     });
   });
@@ -212,11 +213,95 @@ pages.load_home = async () => {
   const posts = document.querySelectorAll(".image-post");
   console.log(posts);
 
-  const logoutHandler = () => {
-    localStorage.removeItem("token");
-    window.location.href = "login.html";
+  const logout = document.getElementById("logout");
+  logout.addEventListener("click", pages.logoutHandler);
+};
+
+pages.load_profile = async () => {
+  if (pages.is_logged_out()) return;
+  pages.unhide();
+
+  let token = localStorage.getItem("token");
+  let payload = JSON.parse(atob(token.split(".")[1]));
+
+  const fname = document.getElementById("fname");
+  const lname = document.getElementById("lname");
+  const username = document.getElementById("username");
+  const email = document.getElementById("email");
+  const bio = document.getElementById("bio");
+  const password = document.getElementById("password");
+  const username_display = document.getElementById("username-display");
+  const profile_picture = document.getElementById("profile-picture");
+
+  let editing = false;
+
+  const btnHandler = async () => {
+    if (editing) {
+      btn.innerText = "Edit Profile";
+
+      const data = new FormData();
+      data.append("f_name", fname.value);
+      data.append("l_name", lname.value);
+      data.append("username", username.value);
+      data.append("email", email.value);
+      data.append("bio", bio.value);
+      data.append("password", password.value);
+
+      const res = await pages.post(base_url + "edit_profile.php", data, token);
+      localStorage.setItem("token", res.data.token);
+      token = localStorage.getItem("token");
+      payload = JSON.parse(atob(token.split(".")[1]));
+      updateProfile();
+
+      fname.disabled = true;
+      lname.disabled = true;
+      username.disabled = true;
+      email.disabled = true;
+      bio.disabled = true;
+
+      fname.classList.remove("editable");
+      lname.classList.remove("editable");
+      username.classList.remove("editable");
+      email.classList.remove("editable");
+      bio.classList.remove("editable");
+      password.classList.remove("editable");
+
+      editing = false;
+    } else {
+      btn.innerText = "Save";
+
+      fname.disabled = false;
+      lname.disabled = false;
+      username.disabled = false;
+      email.disabled = false;
+      bio.disabled = false;
+      password.disabled = false;
+
+      fname.classList.add("editable");
+      lname.classList.add("editable");
+      username.classList.add("editable");
+      email.classList.add("editable");
+      bio.classList.add("editable");
+      password.classList.add("editable");
+
+      editing = true;
+    }
   };
 
+  const updateProfile = () => {
+    fname.value = payload.f_name;
+    lname.value = payload.l_name;
+    username.value = payload.username;
+    email.value = payload.email;
+    bio.value = payload.bio;
+    username_display.innerText = "@" + payload.username;
+  };
+
+  const btn = document.getElementById("edit-save-btn");
+  btn.addEventListener("click", btnHandler);
+
   const logout = document.getElementById("logout");
-  logout.addEventListener("click", logoutHandler);
+  logout.addEventListener("click", pages.logoutHandler);
+
+  updateProfile();
 };

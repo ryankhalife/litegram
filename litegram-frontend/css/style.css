@@ -6,15 +6,11 @@
   box-sizing: border-box;
 }
 
-a {
-  text-decoration: none;
-  color: #70247c;
-}
-a:visited {
-  color: #70247c;
-}
-a:active {
-  opacity: 0.8;
+input:active,
+input:focus,
+textarea:active,
+textarea:focus {
+  outline: none;
 }
 
 body {
@@ -79,7 +75,7 @@ img {
 }
 
 .form button,
-input {
+.form input {
   border-radius: 5px;
   padding: 5px 10px;
   margin: 10px 0;
@@ -198,10 +194,6 @@ input {
   padding: 0 10px;
 }
 
-.post-add-comment input:focus {
-  outline: none;
-}
-
 .post-add-comment button {
   background-color: transparent;
   border: none;
@@ -241,6 +233,96 @@ input {
 .user-like {
   width: 25px;
   height: 25px;
+}
+
+.profile-container {
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  background-color: white;
+  background-color: #4158d0;
+  background-color: #4158d0;
+  background-color: #8bc6ec;
+  background-image: linear-gradient(135deg, #e9d8ec 0%, #5a345f 100%);
+}
+
+.profile-picture-container {
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 50px;
+}
+
+.profile-picture-container img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.profile-picture-container p {
+  font-weight: 600;
+}
+
+.profile-info {
+  border-bottom: black 1px solid;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 50px;
+}
+
+.profile-info-icon {
+  width: 30px;
+  height: 30px;
+  margin: 0 10px;
+}
+
+.profile-info-text {
+  height: 100%;
+  flex-grow: 1;
+}
+
+.profile-info-text input {
+  border: none;
+  background-color: transparent;
+  margin: 0;
+  line-height: 40px;
+  padding: 5px 10px;
+  font-size: 1rem;
+}
+
+.profile-info-text input:disabled {
+  color: black;
+}
+
+.profile-edit-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.profile-edit-btn {
+  background: linear-gradient(
+    90deg,
+    rgba(112, 36, 124, 1) 0%,
+    rgba(111, 56, 120, 1) 50%,
+    rgba(112, 36, 124, 1) 100%
+  );
+  color: white;
+  border: none;
+  border-radius: 120px;
+  padding: 15px 80px;
+  font-size: 1rem;
+}
+
+.profile-edit-btn:hover {
+  cursor: pointer;
+}
+
+.editable {
+  opacity: 0.8;
 }
 
 @media only screen and (max-width: 600px) {
