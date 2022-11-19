@@ -25,6 +25,25 @@ pages.unhide = () => {
   container.classList.remove("hidden");
 };
 
+pages.setUpNav = () => {
+  const home = document.getElementById("home");
+  const profile = document.getElementById("profile");
+  const logout = document.getElementById("logout");
+
+  home.addEventListener("click", (e) => {
+    window.location.href = "index.html";
+  });
+
+  profile.addEventListener("click", (e) => {
+    window.location.href = "profile.html";
+  });
+
+  logout.addEventListener("click", (e) => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  });
+};
+
 pages.post = async (url, data, token = null) => {
   try {
     return await axios.post(url, data, {
@@ -51,11 +70,6 @@ pages.get = async (url, token = null) => {
   } catch (error) {
     return null;
   }
-};
-
-pages.logoutHandler = () => {
-  localStorage.removeItem("token");
-  window.location.href = "login.html";
 };
 
 pages.load_login = async () => {
@@ -123,6 +137,7 @@ pages.load_signup = async () => {
 pages.load_home = async () => {
   if (pages.is_logged_out()) return;
   pages.unhide();
+  pages.setUpNav();
 
   const updateLikes = (post_id, delta) => {
     const post = document.getElementById("post-" + post_id);
@@ -212,14 +227,12 @@ pages.load_home = async () => {
 
   const posts = document.querySelectorAll(".image-post");
   console.log(posts);
-
-  const logout = document.getElementById("logout");
-  logout.addEventListener("click", pages.logoutHandler);
 };
 
 pages.load_profile = async () => {
   if (pages.is_logged_out()) return;
   pages.unhide();
+  pages.setUpNav();
 
   let token = localStorage.getItem("token");
   let payload = JSON.parse(atob(token.split(".")[1]));
@@ -299,9 +312,6 @@ pages.load_profile = async () => {
 
   const btn = document.getElementById("edit-save-btn");
   btn.addEventListener("click", btnHandler);
-
-  const logout = document.getElementById("logout");
-  logout.addEventListener("click", pages.logoutHandler);
 
   updateProfile();
 };
