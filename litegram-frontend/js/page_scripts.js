@@ -1,6 +1,6 @@
 const pages = {};
 
-const base_url = "//litegram.localhost/";
+const base_url = "//litegram.localhost/api/";
 
 pages.load = (page) => {
   eval("pages.load_" + page + "();");
@@ -131,6 +131,8 @@ pages.load_home = async () => {
 
   const token = localStorage.getItem("token");
   const feed = await pages.get(base_url + "get_feed.php", token);
+
+  document.querySelector("#feed-container").innerHTML = feed.data;
 
   if (!feed.data.success) return;
 
