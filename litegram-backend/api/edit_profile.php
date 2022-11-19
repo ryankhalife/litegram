@@ -37,6 +37,7 @@ $user = $result->fetch_assoc();
 $f_name = $_POST['f_name'] ?? $user['f_name'];
 $l_name = $_POST['l_name'] ?? $user['l_name'];
 $username = $_POST['username'] ?? $user['username'];
+$email = $_POST['email'] ?? $user['email'];
 $bio = $_POST['bio'] ?? $user['bio'];
 
 if (isset($_POST['password'])) {
@@ -46,12 +47,24 @@ if (isset($_POST['password'])) {
 }
 
 //update user
-$query = $mysqli->prepare("UPDATE users SET f_name = ?, l_name = ?, username = ?, password = ?, bio = ? WHERE id = ?");
-$query->bind_param("sssssi", $f_name, $l_name, $username, $password, $bio, $user_id);
+$query = $mysqli->prepare("UPDATE users SET f_name = ?, l_name = ?, username = ?, password = ?, bio = ?, email = ? WHERE id = ?");
+$query->bind_param("ssssssi", $f_name, $l_name, $username, $password, $bio, $email, $user_id);
 $query->execute();
 
 $response = [];
 $response['success'] = true;
 $response['message'] = "User updated successfully";
+
+$payload = [
+    "id" => $user['id'],
+    "username" => $username,
+    "email" => $email,
+    "f_name" => $f_name,
+    "l_name" => $l_name,
+    "bio" => $bio,
+];
+
+$jwt = JWT::encode($payload, $key, "HS256");
+$response['token'] = $jwt;
 
 echo json_encode($response);
