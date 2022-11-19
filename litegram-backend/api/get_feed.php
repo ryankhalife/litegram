@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: *");
 
 include('connection.php');
 
-require __DIR__ . '/vendor/autoload.php';
+require dirname(__DIR__) . '/vendor/autoload.php';
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
