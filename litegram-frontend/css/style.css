@@ -75,7 +75,8 @@ img {
 }
 
 .form button,
-.form input {
+.form input,
+.post-add-comment input {
   border-radius: 5px;
   padding: 5px 10px;
   margin: 10px 0;
