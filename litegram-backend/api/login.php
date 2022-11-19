@@ -46,6 +46,7 @@ $payload = [
     "email" => $user['email'],
     "f_name" => $user['f_name'],
     "l_name" => $user['l_name'],
+    "bio" => $user['bio'],
 ];
 
 $jwt = JWT::encode($payload, $key, "HS256");

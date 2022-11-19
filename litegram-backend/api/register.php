@@ -94,7 +94,7 @@ $response = [];
 $response['success'] = true;
 $response['message'] = "User registered successfully";
 
-$id = $mysqli->insert_id;
+$id = $mysqli->insert_id();
 
 $payload = [
     "id" => $id,
@@ -102,6 +102,7 @@ $payload = [
     "email" => $email,
     "f_name" => $f_name,
     "l_name" => $l_name,
+    "bio" => $user['bio'],
 ];
 
 $jwt = JWT::encode($payload, $key, "HS256");
